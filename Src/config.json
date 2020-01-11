@@ -1,0 +1,62 @@
+{
+	"data": {
+		"filename": "data.csv",
+		"columns": [
+            "time",
+			"a_x",
+			"a_y",
+            "a_z",
+            "b_x",
+            "b_y",
+            "b_z",
+            "v_x",
+            "v_y",
+            "v_z",
+            "roll",
+            "pitch",
+            "yaw",
+            "lat",
+            "lon",
+            "height"
+		],
+		"sequence_length": 800,
+		"train_test_split": 0.7,
+		"normalise": false
+	},
+	"training": {
+		"epochs": 350,
+		"batch_size": 64
+	},
+	"model": {
+		"loss": "mse",
+		"save_dir": "../save_models",
+        "mode": "test",
+		"layers": [
+			{
+				"type": "lstm",
+				"neurons": 64,
+				"input_timesteps": 800,
+				"input_dim": 12,
+				"return_seq": true
+			},
+			{
+				"type": "dropout",
+				"rate": 0.2
+			},
+			{
+				"type": "lstm",
+				"neurons": 64,
+				"return_seq": false
+			},
+			{
+				"type": "dropout",
+				"rate": 0.2
+			},
+			{
+				"type": "dense",
+				"neurons": 3,
+                "activation": "linear"
+			}
+		]
+	}
+}
